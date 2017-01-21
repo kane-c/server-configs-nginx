@@ -19,3 +19,22 @@ server {
     return 444;
   }
 }
+
+# Listen on localhost for New Relic reporting
+server {
+  listen 80;
+  #listen [::]:80 ipv6only=on;
+
+  root /usr/share/nginx/html;
+  index index.html index.htm;
+
+  server_name localhost;
+
+  location /nginx_stub_status {
+    # copied from http://blog.kovyrin.net/2006/04/29/monitoring-nginx-with-rrdtool
+    stub_status on;
+    access_log off;
+    allow 127.0.0.1;
+    deny all;
+  }
+}
